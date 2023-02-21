@@ -1,21 +1,19 @@
 
-// import { getAuth } from "firebase/auth";
-// import { getFirestore } from "firebase/firestore";
-import Constants from 'expo-constants';
+import { initializeApp } from "firebase/app";
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
-import{Api_Key,Auth_Domain,Project_Id,Storage_Bucket,Messaging_Sender_Id,App_Id,Measurement_Id} from '@env';
+import{API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID, MEASUREMENT_ID} from '@env';
 
 //firebase config
 const FirebaseConfig = {
-    apiKey: Api_Key,
-    authDomain: Auth_Domain,
-    projectId: Project_Id,
-    storageBucket: Storage_Bucket,
-    messagingSenderId: Messaging_Sender_Id,
-    appId: App_Id,
-    measurementId: Measurement_Id
+    apiKey: API_KEY,
+    authDomain: AUTH_DOMAIN,
+    projectId: PROJECT_ID,
+    storageBucket: STORAGE_BUCKET,
+    messagingSenderId: MESSAGING_SENDER_ID,
+    appId: APP_ID,
+    measurementId: MEASUREMENT_ID
 };
 if (firebase.apps.length === 0) {
     firebase.initializeApp(FirebaseConfig);
