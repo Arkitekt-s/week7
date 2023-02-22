@@ -20,12 +20,16 @@ const PageTwo = () => {
             {notes && notes.map(note => (
                 <View key={note.id} style={styles.noteContainer}>
                     <Text style={styles.noteText}>{note.text22}</Text>
-                    <Button title="Delete" onPress={() => notesRef.doc(note.id).delete()} color="red" />
-                    <Button title="Edit" onPress={() => notesRef.doc(note.id).update({text22: text})} color="blue" />
+                    <Button title={'Add'} onPress={() => notesRef.add({text22: text})}
+                            color={'green'}/>
+                    <Button title="Edit" onPress={() => notesRef.doc(note.id).update({text22: text})} color="blue"
+                    />
+                    <Button title="Delete" onPress={() => notesRef.doc(note.id).delete()} color="red"
+                    />
                 </View>
             ))}
             {/*enter note in text box and click add to add note*/}
-            <Text style={{fontSize: 30}}>Add Note</Text>
+            <Text style={{fontSize: 30}}>Edit or add new text</Text>
            <TextInput
                 value={text}
                 onChangeText={setText}
@@ -38,10 +42,7 @@ const PageTwo = () => {
                 margin={20}
                 />
 
-            <Button title={'Add'} onPress={() => notesRef.add({text22: text})}
-                    color={'green'}
-                    margin={20}
-            />
+
             <Button title={'Go Back'} onPress={() => navigation.navigate('PageOne')}
                     color={'blue'}
             />
@@ -64,7 +65,21 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         // make it circle edge
         borderRadius: 20,
+    },
+    noteContainer: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 20,
+        margin: 10,
+        width: 300,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    noteText: {
+        fontSize: 14,
+        color: 'black',
     }
+
 
 });
 
