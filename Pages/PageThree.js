@@ -7,6 +7,7 @@ import {useCollectionData} from "react-firebase-hooks/firestore";
 import * as ImagePicker from 'expo-image-picker';
 
 
+
 const PageThree = () => {
     const notesRef = firestore.collection('notes');
     const[notes] = useCollectionData(notesRef, {idField: 'id'});
@@ -42,6 +43,7 @@ const PageThree = () => {
         const response = await fetch(uri);
         const blob = await response.blob();
         const ref = storage.ref().child(`images/${Date.now()}`);
+
         return ref.put(blob);
 
     }
@@ -49,6 +51,9 @@ const PageThree = () => {
     const handleUpload = () => {
         uploadImage(image).then(() => {
             alert('Image has been uploaded!');
+        }
+        ).catch((error) => {
+            alert(error);
         });
     }
 
