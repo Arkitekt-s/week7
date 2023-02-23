@@ -1,16 +1,69 @@
 // Home.js
 import React from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
+import {View, Text, StyleSheet, Button, TextInput} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
+import {auth} from "../Config/FirebaseConfig";
 
 
 const PageOne = () => {
     let navigation = useNavigation();
+    //make a username and password match
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    //handle login
+    const handleLogin = () => {
+        //read from username and password from firebase
+        auth.signInWithEmailAndPassword(username, password)
+            .then((userCredential) => {
+                // Signed in
+                var user = userCredential.user;
+                // ...
+                navigation.navigate('PageTwo');
+                //success message
+                alert(user.email + " is logged in");
+            }
+            )
+            .catch((error) => {
+                var errorMessage = error.message;
+                //give an error message if username and password do not match
+                alert(errorMessage);
+            }
+            );
+    }
+
+
     return (
         <View style={styles.container}>
-            <Text style={{fontSize: 30}}>Welcome to Week7</Text>
-            <Button title={'Add Note'}  onPress={() => navigation.navigate('PageTwo')}
+            {/*//login with username and password*/}
+            <Text style={{fontSize: 30}}>Login</Text>
+            <TextInput
+                value={username}
+                onChangeText={setUsername}
+                autoCapitalize={'none'}
+                autoCorrect={false}
+                autoFocus={true}
+                placeholder="Enter username"
+                containerStyle={{ padding: 10 }}
+                style={styles.input}
+                margin={20}
             />
+
+            <TextInput
+                value={password}
+                onChangeText={setPassword}
+                autoCapitalize={'none'}
+                autoCorrect={false}
+                autoFocus={true}
+                placeholder="Enter password"
+                //hide password
+                secureTextEntry={true}
+                containerStyle={{ padding: 10 }}
+                style={styles.inputpassword}
+                margin={20}
+            />
+            <Button title="Login" onPress={handleLogin} color="blue"
+            />
+
         </View>
     );
 };
@@ -21,8 +74,26 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-
-
+    input: {
+        height: 40,
+        width: 300,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        backgroundColor: 'white',
+        // make it circle edge
+        borderRadius: 20,
+    },
+    inputpassword: {
+        height: 40,
+        width: 300,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        backgroundColor: 'white',
+        // make it circle edge
+        borderRadius: 20,
+    }
 });
 
 export default PageOne;

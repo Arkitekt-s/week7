@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/storage';
 import{API_KEY, AUTH_DOMAIN, PROJECT_ID, STORAGE_BUCKET, MESSAGING_SENDER_ID, APP_ID, MEASUREMENT_ID} from '@env';
 
 //firebase config
@@ -23,4 +24,8 @@ if (firebase.apps.length === 0) {
 //initialize firebase
 const auth = firebase.auth();
 const firestore = firebase.firestore();
-export { auth, firestore, firebase };
+const storage = firebase.storage();
+
+
+
+export { auth, firestore, firebase,storage};

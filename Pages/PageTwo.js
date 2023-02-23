@@ -1,6 +1,6 @@
 
-import React, { useState} from 'react';
-import {View, Text, StyleSheet, Button, TextInput} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, StyleSheet, Button, TextInput, TouchableOpacity} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 import{firestore} from '../Config/FirebaseConfig';
 import {useCollectionData} from "react-firebase-hooks/firestore";
@@ -10,42 +10,36 @@ const PageTwo = () => {
     const notesRef = firestore.collection('notes');
     const[notes] = useCollectionData(notesRef, {idField: 'id'});
     let navigation = useNavigation();
-    const [text, setText] = useState('');
-    //delete note
-
     console.log(notes);
+
+    function handleNoteClick(note) {
+        console.log(note);
+        navigation.navigate('PageThree', {note: note});
+    }
+
+
     return (
         <View style={styles.container}>
             {/*show nots and map them*/}
+            <Text style={{fontSize: 30}}>Click on Note</Text>
             {notes && notes.map(note => (
-                <View key={note.id} style={styles.noteContainer}>
+                <TouchableOpacity key={note.id} style={styles.noteContainer} onPress={() => handleNoteClick(note)}>
                     <Text style={styles.noteText}>{note.text22}</Text>
-                    <Button title={'Add'} onPress={() => notesRef.add({text22: text})}
-                            color={'green'}/>
-                    <Button title="Edit" onPress={() => notesRef.doc(note.id).update({text22: text})} color="blue"
-                    />
-                    <Button title="Delete" onPress={() => notesRef.doc(note.id).delete()} color="red"
-                    />
-                </View>
+                </TouchableOpacity>
             ))}
-            {/*enter note in text box and click add to add note*/}
-            <Text style={{fontSize: 30}}>Edit or add new text</Text>
-           <TextInput
-                value={text}
-                onChangeText={setText}
-                autoCapitalize={'none'}
-                autoCorrect={false}
-                autoFocus={true}
-                placeholder="Enter text"
-                containerStyle={{ padding: 10 }}
-                style={styles.input}
-                margin={20}
-                />
+            {/*//each list should be clickable and go to page three*/}
+
 
 
             <Button title={'Go Back'} onPress={() => navigation.navigate('PageOne')}
                     color={'blue'}
+                    margin={10}
             />
+            <Button title={'Add'} onPress={() => notesRef.add({text22: 'New Note'})}
+                    color='green'
+                    margin={10}
+            />
+
 
         </View>
     );
